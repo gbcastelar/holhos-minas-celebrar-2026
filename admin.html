@@ -1,12 +1,45 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#071426"><title>Painel | H.Olhos Minas Celebrar 2026</title><link rel="stylesheet" href="css/admin.css"></head>
-<body><main class="shell">
-  <header><div><small>H.OLHOS MINAS · CELEBRAR 2026</small><h1>Painel de confirmações</h1></div><a href="index.html">← Ver convite</a></header>
-  <section id="login-card" class="panel"><h2>Acesso administrativo</h2><p>Entre com o usuário autorizado no Supabase Auth.</p><form id="login-form"><label>E-mail<input id="email" type="email" required autocomplete="username"></label><label>Senha<input id="password" type="password" required autocomplete="current-password"></label><button>Entrar</button><p id="login-status" class="status"></p></form></section>
-  <section id="dashboard" hidden>
-    <div class="toolbar"><span id="admin-email"></span><button class="outline" id="logout">Sair</button></div>
-    <div class="metrics"><article><small>Respostas recebidas</small><strong id="total">0</strong></article><article><small>Confirmados</small><strong id="yes">0</strong></article><article><small>Não participarão</small><strong id="no">0</strong></article><article><small>Pessoas confirmadas</small><strong id="people">0</strong></article></div>
-    <div class="panel"><div class="table-head"><div><h2>Lista de respostas</h2><p>Atualize para consultar os registros mais recentes.</p></div><div class="actions"><input id="search" placeholder="Buscar nome ou telefone"><select id="filter"><option value="all">Todas as respostas</option><option value="yes">Confirmados</option><option value="no">Não participarão</option></select><button id="refresh">Atualizar</button><button class="outline" id="csv">Exportar CSV</button><button class="outline" id="print">Salvar PDF / Imprimir</button></div></div>
-    <div class="table-wrap"><table><thead><tr><th>Nome</th><th>WhatsApp</th><th>Resposta</th><th>Data da resposta</th></tr></thead><tbody id="rows"><tr><td colspan="4">Carregando...</td></tr></tbody></table></div><p id="data-status" class="status"></p></div>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071426"><title>Painel | H.Olhos Minas Celebrar 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+<main class="shell">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">H<span>.</span></div><div><small>H.OLHOS MINAS <i>•</i> CELEBRAR 2026</small><h1>Painel de confirmações</h1><p>Visão geral das respostas do evento</p></div></div>
+    <div class="top-actions"><span class="live"><i></i> Painel conectado</span><a class="back-link" href="index.html">Ver convite <b>↗</b></a></div>
+  </header>
+
+  <section id="login-card" class="login-wrap">
+    <div class="login-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="login-symbol">H<span>.</span></div><small>H.OLHOS MINAS</small><h2>Celebrar<br><em>2026</em></h2><p>Gestão de confirmações em um só lugar.</p></div>
+    <div class="login-form-area"><span class="eyebrow">ÁREA RESTRITA</span><h2>Bem-vindo de volta</h2><p>Entre com seu e-mail e senha de administrador.</p>
+      <form id="login-form"><label>E-mail<input id="email" type="email" required autocomplete="username" placeholder="seu@email.com"></label><label>Senha<input id="password" type="password" required autocomplete="current-password" placeholder="Sua senha"></label><button class="primary-btn">Acessar painel <span>→</span></button><p id="login-status" class="status" role="status"></p></form>
+    </div>
   </section>
-</main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/config.js"></script><script src="js/admin.js"></script></body></html>
+
+  <section id="dashboard" hidden>
+    <div class="welcome-row"><div><span class="eyebrow">RESUMO DO EVENTO</span><h2>Olá! Aqui está o panorama das confirmações.</h2><p>Última consulta: <strong id="last-updated">—</strong></p></div><div class="user-actions"><span id="admin-email" class="admin-email"></span><button class="ghost-btn" id="logout">Sair ↗</button></div></div>
+    <div class="metrics">
+      <article class="metric metric-total"><div class="metric-top"><span>Total de respostas</span><span class="metric-icon">▤</span></div><strong id="total">0</strong><small>Cadastros recebidos</small><div class="metric-glow"></div></article>
+      <article class="metric metric-yes"><div class="metric-top"><span>Confirmados</span><span class="metric-icon">✓</span></div><strong id="yes">0</strong><small>Presenças confirmadas</small><div class="metric-glow"></div></article>
+      <article class="metric metric-no"><div class="metric-top"><span>Não participarão</span><span class="metric-icon">↗</span></div><strong id="no">0</strong><small>Respostas negativas</small><div class="metric-glow"></div></article>
+      <article class="metric metric-rate"><div class="metric-top"><span>Taxa de confirmação</span><span class="metric-icon">%</span></div><strong id="rate">0%</strong><small>Sobre todas as respostas</small><div class="metric-glow"></div></article>
+    </div>
+
+    <div class="charts-grid">
+      <section class="surface chart-card"><div class="section-heading"><div><span class="eyebrow">PARTICIPAÇÃO</span><h3>Distribuição das respostas</h3><p>Comparativo entre confirmações e ausências</p></div><span class="chart-tag">GERAL</span></div><div class="donut-area"><div class="donut-wrap"><canvas id="attendance-chart" aria-label="Gráfico de distribuição das respostas"></canvas><div class="donut-center"><strong id="donut-total">0</strong><small>respostas</small></div></div><div class="legend"><div><i class="dot dot-green"></i><span>Confirmados</span><b id="legend-yes">0</b></div><div><i class="dot dot-red"></i><span>Não participarão</span><b id="legend-no">0</b></div></div></div></section>
+      <section class="surface chart-card"><div class="section-heading"><div><span class="eyebrow">EVOLUÇÃO</span><h3>Novos cadastros</h3><p>Volume de respostas nos últimos 7 dias</p></div><span class="chart-tag">7 DIAS</span></div><div class="line-chart-wrap"><canvas id="timeline-chart" aria-label="Gráfico de cadastros por dia"></canvas></div></section>
+    </div>
+
+    <section class="surface list-card"><div class="list-heading"><div><span class="eyebrow">ACOMPANHAMENTO</span><h3>Lista de respostas</h3><p>Consulte, filtre e exporte os registros recebidos.</p></div><div class="list-tools"><input id="search" aria-label="Buscar" placeholder="⌕  Buscar nome ou telefone"><select id="filter" aria-label="Filtrar respostas"><option value="all">Todas as respostas</option><option value="yes">Confirmados</option><option value="no">Não participarão</option></select><button id="refresh" class="primary-btn compact">↻ Atualizar</button><button id="csv" class="ghost-btn">↓ CSV</button><button id="print" class="ghost-btn">▤ PDF / Imprimir</button></div></div>
+      <div class="table-wrap"><table><thead><tr><th>CONVIDADO</th><th>WHATSAPP</th><th>STATUS</th><th>DATA DO CADASTRO</th></tr></thead><tbody id="rows"><tr><td colspan="4" class="empty">Carregando registros...</td></tr></tbody></table></div><div class="table-footer"><span id="data-status" role="status">Aguardando dados...</span><span>H.Olhos Minas <b>•</b> Celebrar 2026</span></div>
+    </section>
+  </section>
+  <footer class="page-footer">H.Olhos Minas <span>•</span> Painel administrativo Celebrar 2026</footer>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script><script src="js/config.js"></script><script src="js/admin.js"></script>
+</body></html>
