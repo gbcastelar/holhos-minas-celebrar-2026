@@ -31,3 +31,20 @@ html{scroll-padding-top:88px}
 .developer-credit strong{color:#a9b8ca;font-weight:700}
 .developer-credit a{color:#8ecb83;text-decoration:none;transition:color .2s}
 .developer-credit a:hover{color:#b9e5a9;text-decoration:underline}
+
+/* Identidade animada H.Olhos Minas — efeito orbital compartilhado */
+.logo-orbit{position:relative;display:grid;place-items:center;isolation:isolate;flex:0 0 auto}
+.logo-orbit__ring{position:absolute;display:block;border:1px solid rgba(116,190,133,.72);border-radius:50%;pointer-events:none}
+.logo-orbit__ring--one{inset:0;border-right-color:rgba(76,125,226,.9);border-bottom-color:transparent;animation:brandOrbit 11s linear infinite}
+.logo-orbit__ring--two{inset:7%;border-left-color:rgba(74,126,220,.85);border-top-color:transparent;animation:brandOrbitReverse 15s linear infinite}
+.logo-orbit__ring--three{inset:-9%;border-color:rgba(77,127,213,.2);animation:brandPulse 4s ease-in-out infinite}
+.logo-orbit .brand-mark{position:relative;z-index:1;width:68%;height:68%;object-fit:contain;border-radius:50%;background:#fff;box-shadow:0 0 24px rgba(65,125,203,.16);animation:brandFloat 5s ease-in-out infinite}
+.logo-orbit--compact{width:52px;height:52px}
+.logo-orbit--hero{width:150px;height:150px;margin:0 auto 34px}
+.logo-orbit--hero .brand-mark{width:94px;height:94px}
+@keyframes brandOrbit{to{transform:rotate(360deg)}}
+@keyframes brandOrbitReverse{to{transform:rotate(-360deg)}}
+@keyframes brandPulse{0%,100%{transform:scale(.97);opacity:.45}50%{transform:scale(1.04);opacity:.9}}
+@keyframes brandFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@media(max-width:700px){.logo-orbit--compact{width:44px;height:44px}.logo-orbit--hero{width:125px;height:125px}.logo-orbit--hero .brand-mark{width:80px;height:80px}}
+@media(prefers-reduced-motion:reduce){.logo-orbit__ring,.logo-orbit .brand-mark{animation:none!important}}
