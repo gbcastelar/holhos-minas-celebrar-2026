@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#071426"><title>Painel | H.Olhos Minas Celebrar 2026</title><link rel="stylesheet" href="css/admin.css"></head>
+<body><main class="shell">
+  <header><div><small>H.OLHOS MINAS · CELEBRAR 2026</small><h1>Painel de confirmações</h1></div><a href="index.html">← Ver convite</a></header>
+  <section id="login-card" class="panel"><h2>Acesso administrativo</h2><p>Entre com o usuário autorizado no Supabase Auth.</p><form id="login-form"><label>E-mail<input id="email" type="email" required autocomplete="username"></label><label>Senha<input id="password" type="password" required autocomplete="current-password"></label><button>Entrar</button><p id="login-status" class="status"></p></form></section>
+  <section id="dashboard" hidden>
+    <div class="toolbar"><span id="admin-email"></span><button class="outline" id="logout">Sair</button></div>
+    <div class="metrics"><article><small>Respostas recebidas</small><strong id="total">0</strong></article><article><small>Confirmados</small><strong id="yes">0</strong></article><article><small>Não participarão</small><strong id="no">0</strong></article><article><small>Pessoas confirmadas</small><strong id="people">0</strong></article></div>
+    <div class="panel"><div class="table-head"><div><h2>Lista de respostas</h2><p>Atualize para consultar os registros mais recentes.</p></div><div class="actions"><input id="search" placeholder="Buscar nome ou telefone"><select id="filter"><option value="all">Todas as respostas</option><option value="yes">Confirmados</option><option value="no">Não participarão</option></select><button id="refresh">Atualizar</button><button class="outline" id="csv">Exportar CSV</button><button class="outline" id="print">Salvar PDF / Imprimir</button></div></div>
+    <div class="table-wrap"><table><thead><tr><th>Nome</th><th>WhatsApp</th><th>Resposta</th><th>Data da resposta</th></tr></thead><tbody id="rows"><tr><td colspan="4">Carregando...</td></tr></tbody></table></div><p id="data-status" class="status"></p></div>
+  </section>
+</main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/config.js"></script><script src="js/admin.js"></script></body></html>
