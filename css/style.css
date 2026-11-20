@@ -25,3 +25,9 @@ html{scroll-padding-top:88px}
 .footer{padding:55px 20px 34px}.admin-access{margin:26px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.075);max-width:300px}.admin-access a{display:inline-flex;align-items:center;gap:10px;padding:11px 17px;border-radius:var(--radius-pill);border:1px solid rgba(139,207,119,.18);background:rgba(255,255,255,.025);color:#8798ad;font-size:10px;letter-spacing:.1em;text-transform:uppercase;transition:.25s}.admin-access a:hover{color:#b9e5a9;border-color:rgba(139,207,119,.5);background:rgba(57,169,91,.09);transform:translateY(-2px)}.admin-access a span:last-child{color:#8ecb83;font-size:13px}.admin-access-dot{width:6px;height:6px;border-radius:50%;background:#75c879;box-shadow:0 0 10px #75c879}
 @media(max-width:700px){.topbar{height:68px;padding:0 18px}.top-link{padding:11px 15px;font-size:10px}.hero{min-height:720px;padding:125px 20px 75px}.hero:after{inset:10% 4% 7%;border-radius:30px}.section-wrap{padding:78px 22px}.detail-card{border-radius:20px;padding:23px}.rsvp-section{padding:78px 20px}.rsvp-actions{flex-direction:column}.rsvp-actions button{width:100%}.footer{padding-bottom:28px}}
 @media(prefers-reduced-motion:reduce){.detail-card,.top-link,.admin-access a{transition:none}}
+
+/* Crédito de desenvolvimento */
+.developer-credit{margin:18px auto 0;color:#718198;font-size:10px;letter-spacing:.035em;line-height:1.8}
+.developer-credit strong{color:#a9b8ca;font-weight:700}
+.developer-credit a{color:#8ecb83;text-decoration:none;transition:color .2s}
+.developer-credit a:hover{color:#b9e5a9;text-decoration:underline}
