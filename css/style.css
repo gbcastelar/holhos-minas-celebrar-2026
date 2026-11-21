@@ -48,3 +48,73 @@ html{scroll-padding-top:88px}
 @keyframes brandFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 @media(max-width:700px){.logo-orbit--compact{width:44px;height:44px}.logo-orbit--hero{width:125px;height:125px}.logo-orbit--hero .brand-mark{width:80px;height:80px}}
 @media(prefers-reduced-motion:reduce){.logo-orbit__ring,.logo-orbit .brand-mark{animation:none!important}}
+/* BOTÃO DE LOCALIZAÇÃO */
+.maps-action {
+    display: flex;
+    justify-content: center;
+    margin: 38px auto 0;
+    padding: 0 15px;
+}
+
+.maps-button {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    width: min(100%, 390px);
+    padding: 17px 22px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(110deg, #174b91, #087c9c 55%, #249b70);
+    border: 1px solid rgba(139, 207, 131, .65);
+    box-shadow: 0 10px 30px rgba(15, 91, 130, .22);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.maps-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(15, 91, 130, .35);
+}
+
+.maps-button-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    color: #174b91;
+    background: #fff;
+    font-size: 28px;
+}
+
+.maps-button-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    text-align: left;
+}
+
+.maps-button-text strong {
+    font-size: 14px;
+    letter-spacing: .08em;
+}
+
+.maps-button-text small {
+    font-size: 11px;
+    color: rgba(255,255,255,.85);
+}
+
+.maps-button-arrow {
+    font-size: 23px;
+    color: #b5f18d;
+}
+
+@media (max-width: 480px) {
+    .maps-button {
+        padding: 15px;
+        gap: 12px;
+    }
+}
