@@ -118,3 +118,57 @@ html{scroll-padding-top:88px}
         gap: 12px;
     }
 }
+.admin-whatsapp-contact {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 17px 19px;
+  border: 1px solid rgba(72, 190, 125, .35);
+  border-radius: 18px;
+  background: linear-gradient(
+    110deg,
+    rgba(25, 126, 88, .20),
+    rgba(29, 78, 110, .20)
+  );
+  color: #fff;
+  transition: .25s ease;
+}
+
+.admin-whatsapp-contact:hover {
+  transform: translateY(-3px);
+  border-color: #58c98b;
+  background: rgba(35, 140, 91, .25);
+}
+
+.contact-whatsapp-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: #238c5b;
+  font-size: 23px;
+}
+
+.admin-whatsapp-contact span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.admin-whatsapp-contact strong {
+  font-size: 12px;
+}
+
+.admin-whatsapp-contact small {
+  color: #b7c9d5;
+  font-size: 10px;
+}
+
+.contact-arrow {
+  color: #8bd078;
+  font-size: 20px;
+}
