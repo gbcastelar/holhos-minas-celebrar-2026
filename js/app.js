@@ -9,6 +9,8 @@
   const whatsappLink = document.getElementById("whatsapp-link");
   const noButton = document.getElementById("no-button");
 
+  let processing = false;
+
   // Elementos opcionais
   const eventDate = document.getElementById("event-date");
 
@@ -29,13 +31,14 @@
     return;
   }
 
+  // Verifica a configuração do Supabase
   const configured = () =>
     cfg.SUPABASE_URL &&
     cfg.SUPABASE_ANON_KEY &&
     !cfg.SUPABASE_URL.includes("SEU-PROJETO") &&
     !cfg.SUPABASE_ANON_KEY.includes("SUA_CHAVE");
 
-  // Conexão com Supabase
+  // Inicializa o Supabase
   const client =
     configured() && window.supabase
       ? window.supabase.createClient(
@@ -44,6 +47,7 @@
         )
       : null;
 
+  // Remove caracteres não numéricos
   function digits(value) {
     return (value || "").replace(/\D/g, "");
   }
@@ -65,15 +69,25 @@
     return `https://wa.me/${cfg.WHATSAPP_NUMBER || "5535987127985"}?text=${encodeURIComponent(msg)}`;
   }
 
-  // Exibe uma mensagem de status
+  // Exibe mensagens
   function showStatus(message) {
     status.textContent = message;
     status.hidden = false;
+    status.style.display = "";
   }
 
-  // Finaliza o processamento com sucesso
+  // Controla os botões durante o envio
+  function setButtonsDisabled(disabled) {
+    form.querySelectorAll("button").forEach(button => {
+      button.disabled = disabled;
+    });
+
+    noButton.disabled = disabled;
+  }
+
+  // Finaliza o cadastro com sucesso
   function showSuccess(name, phone, attendance) {
-    // Limpa a mensagem de processamento
+    // Limpa o processamento
     status.textContent = "";
     status.hidden = true;
     status.style.display = "none";
@@ -81,6 +95,11 @@
     // Oculta o formulário
     form.hidden = true;
     form.style.display = "none";
+
+    // Oculta também o botão de não participação,
+    // caso esteja fora do formulário
+    noButton.hidden = true;
+    noButton.style.display = "none";
 
     // Atualiza a mensagem de sucesso
     successMessage.textContent =
@@ -94,16 +113,16 @@
       whatsappLink.hidden = false;
     }
 
-    // Mostra o painel de sucesso
+    // Exibe o painel de sucesso
     success.hidden = false;
     success.style.display = "";
   }
 
-  // Envia a resposta
+  // Envia a resposta para o Supabase
   async function submit(attendance) {
-    status.textContent = "";
-    status.hidden = false;
-    status.style.display = "";
+    if (processing) return;
+
+    processing = true;
 
     const nameInput = document.getElementById("guest-name");
     const phoneInput = document.getElementById("guest-phone");
@@ -111,7 +130,7 @@
 
     if (!nameInput || !phoneInput || !consentInput) {
       showStatus("Não foi possível localizar todos os campos do formulário.");
-      console.error("Campos obrigatórios não encontrados.");
+      processing = false;
       return;
     }
 
@@ -119,14 +138,17 @@
     const phone = phoneInput.value.trim();
     const consent = consentInput.checked;
 
-    // Validação
+    // Validação dos campos
     if (!name || !phone || digits(phone).length < 10 || !consent) {
       showStatus(
         "Informe seu nome, um WhatsApp válido e aceite o uso dos dados."
       );
+
+      processing = false;
       return;
     }
 
+    // Verifica conexão
     if (!client) {
       showStatus(
         "Não foi possível conectar ao sistema. Avise a organização pelo WhatsApp."
@@ -135,42 +157,38 @@
       console.error(
         "Supabase não configurado ou biblioteca indisponível."
       );
+
+      processing = false;
       return;
     }
 
+    // Dados enviados
     const payload = {
-      name,
-      phone,
-      attendance,
+      name: name,
+      phone: phone,
+      attendance: attendance,
       companions: 0,
       consent: true,
       source: "website"
     };
 
-    const buttons = form.querySelectorAll("button");
-
-    // Evita envios duplicados durante o processamento
-    buttons.forEach(button => {
-      button.disabled = true;
-    });
-
+    setButtonsDisabled(true);
     showStatus("Registrando sua resposta...");
 
     try {
-      const { data, error } = await client
+      // Grava diretamente, sem solicitar leitura do registro.
+      const { error } = await client
         .from("celebrar_confirmations")
-        .insert(payload)
-        .select("id")
-        .single();
+        .insert(payload);
 
       if (error) {
         console.error("Erro Supabase:", error);
         throw error;
       }
 
-      console.log("Confirmação gravada:", data);
+      console.log("Confirmação gravada com sucesso!");
 
-      // Exibe a tela final e remove o status de processamento
+      // Exibe a tela final
       showSuccess(name, phone, attendance);
 
     } catch (err) {
@@ -180,10 +198,11 @@
         "Não foi possível registrar sua resposta. Tente novamente ou fale com a organização pelo WhatsApp."
       );
 
-      // Libera os botões para uma nova tentativa
-      buttons.forEach(button => {
-        button.disabled = false;
-      });
+      // Libera os botões para nova tentativa
+      setButtonsDisabled(false);
+
+    } finally {
+      processing = false;
     }
   }
 
@@ -196,7 +215,10 @@
   // Não poderá participar
   noButton.addEventListener("click", event => {
     event.preventDefault();
+    event.stopPropagation();
     submit("no");
   });
+
+  console.log("Sistema de confirmação H.Olhos Minas iniciado.");
 
 })();
